@@ -1,4 +1,3 @@
-
 import pandas as pd
 from sklearn.preprocessing import LabelEncoder
 
@@ -6,16 +5,18 @@ def load_data(filepath: str) -> pd.DataFrame:
     return pd.read_csv(filepath)
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
-    # Fill missing values for categorical variables
-    df['Gender'].fillna('Male', inplace=True)
-    df['Married'].fillna(df['Married'].mode()[0], inplace=True)
-    df['Dependents'].fillna(df['Dependents'].mode()[0], inplace=True)
-    df['Self_Employed'].fillna('No', inplace=True)
-    df['Credit_History'].fillna(1.0, inplace=True)
-    df['Loan_Amount_Term'].fillna(df['Loan_Amount_Term'].mode()[0], inplace=True)
-    
-    # Fill missing LoanAmount with median
-    df['LoanAmount'].fillna(df['LoanAmount'].median(), inplace=True)
+    # Drop ID column if it exists (fixes the ValueError)
+    if 'Loan_ID' in df.columns:
+        df = df.drop(columns=['Loan_ID'])
+
+    # Fill missing values
+    df['Gender'] = df['Gender'].fillna('Male')
+    df['Married'] = df['Married'].fillna(df['Married'].mode()[0])
+    df['Dependents'] = df['Dependents'].fillna(df['Dependents'].mode()[0])
+    df['Self_Employed'] = df['Self_Employed'].fillna('No')
+    df['Credit_History'] = df['Credit_History'].fillna(1.0)
+    df['Loan_Amount_Term'] = df['Loan_Amount_Term'].fillna(df['Loan_Amount_Term'].mode()[0])
+    df['LoanAmount'] = df['LoanAmount'].fillna(df['LoanAmount'].median())
 
     return df
 
