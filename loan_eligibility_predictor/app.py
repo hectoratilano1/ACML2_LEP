@@ -3,7 +3,7 @@ import streamlit as st
 import pandas as pd
 from src.model import load_model, predict
 
-st.title("🏦 Loan Eligibility Predictor")
+st.title("Loan Eligibility Predictor")
 
 st.write("Enter the applicant's information:")
 

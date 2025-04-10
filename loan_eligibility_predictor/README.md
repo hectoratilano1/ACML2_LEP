@@ -1,8 +1,8 @@
-# 🏦 Loan Eligibility Predictor
+# Loan Eligibility Predictor
 
 This project uses a machine learning model to predict whether a loan application should be approved based on applicant information. It includes preprocessing, training a Logistic Regression model, and deploying a Streamlit web app.
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 loan_eligibility_predictor/
@@ -19,7 +19,7 @@ loan_eligibility_predictor/
 └── README.md
 ```
 
-## 🚀 How to Run
+## How to Run
 
 1. Clone the repo and navigate to the folder.
 2. Install dependencies:
@@ -36,7 +36,7 @@ loan_eligibility_predictor/
    streamlit run app.py
    ```
 
-## ✅ Output
+## Output
 
 - Model training with accuracy report
 - Streamlit app for interactive prediction
