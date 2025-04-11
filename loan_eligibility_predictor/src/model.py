@@ -3,8 +3,9 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 import joblib
 import logging
+import os
 
-# Optional: logging config in case this file is run directly (safe fallback)
+# Optional: logging config
 logging.basicConfig(level=logging.INFO, format='%(levelname)s - %(message)s')
 
 def split_data(df: pd.DataFrame):
@@ -20,19 +21,23 @@ def train_model(X_train, y_train):
     logging.info("Model training completed.")
     return model
 
-def save_model(model, path='model.joblib'):
+def save_model(model, filename='model.joblib'):
     try:
-        joblib.dump(model, path)
-        logging.info(f"Model saved to {path}")
+        # Save to project root
+        model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", filename)
+        joblib.dump(model, model_path)
+        logging.info(f"Model saved to {model_path}")
     except Exception as e:
         logging.error(f"Failed to save model: {e}", exc_info=True)
 
-def load_model(path='model.joblib'):
+def load_model(filename='model.joblib'):
     try:
-        logging.info(f"Loading model from {path}...")
-        return joblib.load(path)
+        # Load from project root
+        model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", filename)
+        logging.info(f"Loading model from {model_path}...")
+        return joblib.load(model_path)
     except FileNotFoundError:
-        logging.error(f"Model file '{path}' not found.")
+        logging.error(f"Model file '{filename}' not found at {model_path}.")
         raise
     except Exception as e:
         logging.error(f"Error loading model: {e}", exc_info=True)
