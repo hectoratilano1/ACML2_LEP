@@ -1,8 +1,13 @@
 import pandas as pd
+import streamlit as st
 from sklearn.preprocessing import LabelEncoder
 
 def load_data(filepath: str) -> pd.DataFrame:
-    return pd.read_csv(filepath)
+    try:
+        return pd.read_csv(filepath)
+    except FileNotFoundError:
+        st.error(f"❌ File not found: {filepath}")
+        st.stop()
 
 def clean_data(df: pd.DataFrame) -> pd.DataFrame:
     # Drop ID column if it exists (fixes the ValueError)

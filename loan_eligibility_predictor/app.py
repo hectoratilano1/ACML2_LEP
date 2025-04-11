@@ -1,13 +1,12 @@
-
 import streamlit as st
 import pandas as pd
+import os
 from src.model import load_model, predict
 
-st.title("Loan Eligibility Predictor")
-
+st.title("🏦 Loan Eligibility Predictor")
 st.write("Enter the applicant's information:")
 
-# Input fields for user
+# User input form
 gender = st.selectbox("Gender", ["Male", "Female"])
 married = st.selectbox("Married", ["Yes", "No"])
 dependents = st.selectbox("Dependents", ["0", "1", "2", "3+"])
@@ -20,7 +19,7 @@ loan_term = st.selectbox("Loan Term", [360, 180, 120, 84])
 credit_history = st.selectbox("Credit History", [1.0, 0.0])
 property_area = st.selectbox("Property Area", ["Urban", "Semiurban", "Rural"])
 
-# Encoding input manually to match training encoding
+# Manual encoding (should match training)
 input_dict = {
     "Gender": 1 if gender == "Male" else 0,
     "Married": 1 if married == "Yes" else 0,
@@ -37,7 +36,11 @@ input_dict = {
 
 input_df = pd.DataFrame([input_dict])
 
+# Prediction
 if st.button("Predict Loan Approval"):
-    model = load_model()
-    result = predict(model, input_df)[0]
-    st.success("✅ Loan Approved" if result == 1 else "❌ Loan Not Approved")
+    try:
+        model = load_model()
+        result = predict(model, input_df)[0]
+        st.success("✅ Loan Approved" if result == 1 else "❌ Loan Not Approved")
+    except Exception as e:
+        st.error(f"Error during prediction: {e}")
