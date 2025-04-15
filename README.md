@@ -39,4 +39,4 @@ loan_eligibility_predictor/
 ## Output
 
 - Model training with accuracy report
-- Streamlit app for interactive prediction
+- Streamlit app for interactive prediction: https://ac-ml-lep-hh-2025.streamlit.app/
